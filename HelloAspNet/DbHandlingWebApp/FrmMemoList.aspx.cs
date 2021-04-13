@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Z.Dapper.Plus;
 
 namespace DbHandlingWebApp
 {
@@ -14,6 +15,7 @@ namespace DbHandlingWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             var connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
 
             using (var conn = new SqlConnection(connString))

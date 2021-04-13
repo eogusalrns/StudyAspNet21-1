@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DbHandlingWebApp.Models
 {
-    public class Memos
+    public class Memo
     {
         public int Num { get; set; }
         public string Name { get; set; }

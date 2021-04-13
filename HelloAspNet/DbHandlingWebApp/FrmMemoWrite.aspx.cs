@@ -1,4 +1,5 @@
-﻿using DbHandlingWebApp.Models;
+﻿using Dapper.Bulk;
+using DbHandlingWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,12 +15,41 @@ namespace DbHandlingWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<Memo> lists = new List<Memo>();
 
+            for (int i = 0; i < 1000000; i++)
+            {
+                var temp = new Memo()
+                {
+                    Num = i + 11,
+                    Name = $"TEST {i + 1}",
+                    Email = $"test_{i + 1}@naver.com",
+                    Title = $"Test Title {i + 1}",
+                    PostDate = DateTime.Now,
+                    PostIP = "127.0.0.1"
+                };
+                lists.Add(temp);
+            }
+
+            DateTime startTime = DateTime.Now;
+            LblResult.Text = $"{lists.Count}";
+
+            var connString = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
+
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                conn.BulkInsert(lists);
+            }
+
+            TimeSpan times = DateTime.Now - startTime;
+
+            LblResult.Text = $"Done in {times}";
         }
 
         protected void BtnWrite_Click(object sender, EventArgs e)
         {
-            Memos memos = new Memos();
+            Memo memos = new Memo();
             memos.Name = TxtName.Text;
             memos.Email = TxtEmail.Text;
             memos.Title = TxtTitle.Text;
