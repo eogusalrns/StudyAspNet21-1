@@ -23,6 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12" style="background-color: aquamarine;">
+                    
                     <nav:Navigator runat="server" ID="UcNavigator" />
                 </div>
             </div>
